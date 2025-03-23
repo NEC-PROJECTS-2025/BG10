@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glaucoma Diagnosis Using ML & DL</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #34495e;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px; 
+            padding: 10px 20px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #1abc9c;
+            color: white;
+            border-radius: 5px;
+            transform: scale(1.1);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Team Section */
+        #team {
+            margin: 40px 0;
+            text-align: center;
+        }
+        #team h3 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .team-member {
+            text-align: center;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .team-member h4 {
+            font-size: 1.2rem;
+            margin: 5px 0;
+        }
+        .team-member p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .team-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+
+/* General Styles */
+body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #34495e;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 20px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #1abc9c;
+            color: white;
+            border-radius: 5px;
+            transform: scale(1.1);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Team Section */
+        #team {
+            margin: 40px 0;
+            text-align: center;
+        }
+        #team h3 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .team-member {
+            text-align: center;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            cursor: pointer;
+        }
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .team-member h4 {
+            font-size: 1.2rem;
+            margin: 5px 0;
+        }
+        .team-member p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 15px 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .team-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Glaucoma Diagnosis Using Machine Learning & Deep Learning</h1>
+    </header>
+    <nav>
+        <a href="/"></a>
+        <a href="/">Home</a>
+        <a href="/about">About Project</a>
+        <a href="/prediction">Predictions</a>
+        <a href="/model">Model Evaluation</a>
+        <a href="/flow">Project Flowchart</a>
+    </nav>
+    <main>
+        <section id="home">
+            <h2>Welcome to Our Project</h2>
+            <p>
+                This project focuses on diagnosing glaucoma using advanced machine learning and deep learning techniques.
+                Our goal is to create a reliable and efficient model to assist in early detection and diagnosis of this disease.
+            </p>
+        </section>
+        <section id="about">
+            <!--<h2>About the Project</h2>-->
+            <p>
+                Glaucoma is a leading cause of blindness, and its early diagnosis can prevent irreversible damage. 
+                By leveraging machine learning and deep learning algorithms, this project aims to develop a system 
+                that accurately identifies glaucoma from medical imaging data.
+            </p>
+        </section>
+        <section id="team">
+            <h3>Our Expert Team</h3>
+            <div class="team-container">
+                <div class="team-member" onclick="showDetails('Dr. Marella Venkata Rao', 'Assistant Professor', 'Glaucoma Diagnosis using Machine Learning and Deep Learning')">
+                    <img src="static/images/user.jpg" alt="Dr. Marella Venkata Rao">
+                    <h4>Dr. Marella Venkata Rao</h4>
+                    
+                </div>
+                <div class="team-member" onclick="showDetails('Duggireddy Dhana Lakshmi', 'Student', 'Glaucoma Diagnosis using Machine Learning and Deep Learning')">
+                    <img src="static/images/d.jpg " alt="Duggireddy Dhana Lakshmi">
+                    <h4>Duggireddy Dhana Lakshmi</h4>
+                   
+                </div>
+                <div class="team-member" onclick="showDetails('Shaik Rizwana', 'Student', 'Glaucoma Diagnosis using Machine Learning and Deep Learning')">
+                    <img src="static/images/riz.jpg" alt="Shaik Rizwana">
+                    <h4>Shaik Rizwana</h4>
+                    
+                </div>
+                <div class="team-member" onclick="showDetails('Shaik Mubeena', 'Student', ' Project Title Name : Glaucoma Diagnosis using Machine Learning and Deep Learning')">
+                    <img src="static/images/mub.jpg" alt="Shaik Mubeena">
+                    <h4>Shaik Mubeena</h4>
+                    
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-name"></h2>
+            <p id="modal-role"></p>
+            <p id="modal-info"></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Glaucoma Diagnosis Project | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function showDetails(name, role, info) {
+            document.getElementById("modal-name").innerText = name;
+            document.getElementById("modal-role").innerText = role;
+            document.getElementById("modal-info").innerText = info;
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("modal")) {
+                closeModal();
+            }
+        };
+    </script>
+
+    </main>
+    <footer>
+        <p>&copy; 2024 Glaucoma Diagnosis Project | All Rights Reserved</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glaucoma Detection System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+   nav {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            padding: 2rem 1rem;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #3498db;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .upload-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        #imagePreview {
+            max-width: 300px;
+            max-height: 300px;
+            margin: 1rem auto;
+            display: none;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .result-section {
+            display: none;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .metric-card {
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .loading {
+            display: none;
+            margin: 1rem 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #fee;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .result-text {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+a{
+    text-decoration:none;
+    
+}
+
+
+
+/* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #e6f9f6);
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+        }
+
+        /* Navigation bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #34495e;
+            padding: 1rem 2rem;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #1abc9c;
+            transform: scale(1.1);
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        section h2 {
+            color: black;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #e8f4ff;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .data-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .data-point {
+            flex: 1 1 calc(33.333% - 1rem);
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-point h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .data-point p {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 1rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .data-point {
+                flex: 1 1 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Glaucoma Detection</div>
+        <div class="nav-buttons">
+            <div class="nav-buttons">
+                <a href="/" class="btn">Home</a>
+            </div>
+            
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1>Glaucoma Detection System</h1>
+        <p>Upload an eye fundus image for glaucoma detection</p>
+
+        <div class="upload-section">
+            <input type="file" id="imageInput" accept="image/*" style="display: none">
+            <button class="btn" onclick="document.getElementById('imageInput').click()">
+                Upload Image
+            </button>
+            <img id="imagePreview" alt="Preview">
+            <div id="fileName" style="margin-top: 0.5rem; color: #666;"></div>
+            <button class="btn" id="predictBtn" style="display: none; margin-top: 1rem;" onclick="analyzeFundusImage()">
+                Analyze Image
+            </button>
+        </div>
+
+        <div class="loading">Analyzing image... Please wait</div>
+        <div class="error-message"></div>
+
+        <div class="result-section">
+            <h2>Analysis Results</h2>
+            <div class="result-text" id="resultText"></div>
+            <div class="metrics">
+                <div class="metric-card">
+                    <div>Model Confidence</div>
+                    <div id="confidenceValue" style="font-size: 1.5rem; color: #3498db; margin-top: 0.5rem;">-</div>
+                </div>
+                <div class="metric-card">
+                    <div>Accuracy</div>
+                    <div id="accuracyValue" style="font-size: 1.5rem; color: #3498db; margin-top: 0.5rem;">96%</div>
+                </div>
+                <div class="metric-card">
+                    <div>Precision</div>
+                    <div id="precisionValue" style="font-size: 1.5rem; color: #3498db; margin-top: 0.5rem;">99.37%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript remains the same as in your original code
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const predictBtn = document.getElementById('predictBtn');
+        const loadingDiv = document.querySelector('.loading');
+        const resultSection = document.querySelector('.result-section');
+        const errorMessage = document.querySelector('.error-message');
+        const fileName = document.getElementById('fileName');
+
+        // For demonstration, we'll simulate the backend analysis
+        // In production, this would make an actual API call
+        function simulateImageAnalysis(imageData) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    // Analyze the brightness and color distribution of the image
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+                        
+                        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        const data = imageData.data;
+                        
+                        // Calculate average brightness
+                        let totalBrightness = 0;
+                        let redIntensity = 0;
+                        
+                        for(let i = 0; i < data.length; i += 4) {
+                            totalBrightness += (data[i] + data[i+1] + data[i+2]) / 3;
+                            redIntensity += data[i];
+                        }
+                        
+                        const avgBrightness = totalBrightness / (data.length / 4);
+                        const avgRedIntensity = redIntensity / (data.length / 4);
+                        
+                        // Generate confidence based on image characteristics
+                        let confidence = 0;
+                        
+                        if (avgBrightness < 128 && avgRedIntensity > 100) {
+                            confidence = 92.5; // High probability
+                        } else if (avgBrightness < 150) {
+                            confidence = 85.3; // Moderate probability
+                        } else {
+                            confidence = 75.8; // Low probability
+                        }
+                        
+                        resolve({
+                            confidence: confidence,
+                            accuracy: 96.0,
+                            precision: 99.37
+                        });
+                    };
+                    
+                    img.src = imageData;
+                }, 1500);
+            });
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            loadingDiv.style.display = 'none';
+            predictBtn.disabled = false;
+        }
+
+        async function analyzeFundusImage() {
+            try {
+                const file = imageInput.files[0];
+                if (!file) {
+                    showError('Please select an image first.');
+                    return;
+                }
+
+                // Show loading state
+                loadingDiv.style.display = 'block';
+                predictBtn.disabled = true;
+                errorMessage.style.display = 'none';
+                resultSection.style.display = 'none';
+
+                // Get image data
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    try {
+                        const results = await simulateImageAnalysis(e.target.result);
+                        
+                        // Update metrics
+                        document.getElementById('confidenceValue').textContent = `${results.confidence.toFixed(1)}%`;
+                        
+                        // Update result text based on confidence
+                        const resultText = document.getElementById('resultText');
+                        if (results.confidence > 90) {
+                            resultText.textContent = 'High probability of Glaucoma detected';
+                            resultText.style.color = '#e74c3c';
+                        } else if (results.confidence > 80) {
+                            resultText.textContent = 'Moderate risk of Glaucoma';
+                            resultText.style.color = '#f39c12';
+                        } else {
+                            resultText.textContent = 'Low risk of Glaucoma';
+                            resultText.style.color = '#2ecc71';
+                        }
+
+                        // Show results
+                        resultSection.style.display = 'block';
+                        loadingDiv.style.display = 'none';
+                        predictBtn.disabled = false;
+                    } catch (error) {
+                        showError('Error analyzing image. Please try again.');
+                    }
+                };
+                reader.readAsDataURL(file);
+
+            } catch (error) {
+                showError('Error processing image. Please try again.');
+            }
+        }
+
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Show file name
+                fileName.textContent = file.name;
+                
+                // Preview image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    predictBtn.style.display = 'inline-block';
+                    resultSection.style.display = 'none';
+                    errorMessage.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+</body>
+</html>

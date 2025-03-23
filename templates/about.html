@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Glaucoma Detection Project</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #e6f9f6);
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+        }
+
+        /* Navigation bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #34495e;
+            padding: 1rem 2rem;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+nav {
+            display: flex;
+            justify-content: center;
+            background-color: #34495e;
+            padding: 10px 0;
+        }
+
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+           padding: 10px 20px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #1abc9c;
+            transform: scale(1.1);
+            border-radius: 5px;
+
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+ main {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        section h2 {
+            color: black;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #e8f4ff;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .data-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .data-point {
+            flex: 1 1 calc(33.333% - 1rem);
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-point h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .data-point p {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 1rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .data-point {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About the Glaucoma Detection Project</h1>
+        <p>Innovative Machine Learning Solutions for Early Detection and Prevention of Glaucoma.</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+ <a href="/home">Home</a>
+        
+        <a href="/prediction">Prediction</a>
+        <a href="/model">Model Evalution</a>
+        <a href="/flow">Project Flowchart</a>
+
+            </nav>
+
+    <div class="container">
+        <section>
+            <h2>Overview</h2>
+            <p>The Glaucoma Detection Project is a cutting-edge initiative designed to tackle one of the leading causes of irreversible blindness. By leveraging advanced machine learning and deep learning technologies, the project aims to provide accurate and early detection of glaucoma using retinal fundus images.</p>
+        </section>
+        <section>
+            <h2>Key Objectives</h2>
+            <ul>
+                <li>To enable early detection of glaucoma using AI-driven technologies.</li>
+                <li>To improve diagnostic accuracy, precision, and recall rates with integrated frameworks.</li>
+                <li>To enhance ophthalmic healthcare accessibility with automated diagnostic systems.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Features and Achievements</h2>
+            <div class="highlight">
+                <p>Our project combines powerful convolutional neural networks like ResNet50 and VGG-16 with Random Forest classifiers, ensuring high accuracy and reliability in glaucoma detection.</p>
+            </div>
+            <div class="data-points">
+                <div class="data-point">
+                    <h3>96%</h3>
+                    <p>Overall Model Accuracy</p>
+                </div>
+                <div class="data-point">
+                    <h3>99.37%</h3>
+                    <p>Precision Achieved</p>
+                </div>
+                <div class="data-point">
+                    <h3>88.50%</h3>
+                    <p>Recall Score</p>
+                </div>
+                <div class="data-point">
+                    <h3>93.60%</h3>
+                    <p>F1-Score</p>
+                </div>
+                <div class="data-point">
+                    <h3>4 Datasets</h3>
+                    <p>ACRIMA, G1020, ORIGA, REFUGE</p>
+                </div>
+                <div class="data-point">
+                    <h3>224×224×3</h3>
+                    <p>Image Size for Standardized Input</p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>Technology Stack</h2>
+            <p>We utilize advanced technologies and methodologies to achieve our objectives:</p>
+            <ul>
+                <li><strong>Deep Learning Models:</strong> ResNet50, VGG-16.</li>
+                <li><strong>Machine Learning Classifier:</strong> Random Forest.</li>
+                <li><strong>Feature Extraction:</strong> Gray-Level Co-occurrence Matrix (GLCM).</li>
+                <li><strong>Preprocessing:</strong> RGB to Grayscale conversion for improved texture analysis.</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Glaucoma Detection Project. All rights reserved.</p>
+    </footer>
+</body>
+</html>

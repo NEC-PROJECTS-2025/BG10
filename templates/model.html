@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Evaluation Dashboard</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #e6f9f6);
+            color: #2c3e50;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        /* Table Styles */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            color: white;
+            font-weight: 600;
+        }
+
+        td {
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) td {
+            background: #f9f9f9;
+        }
+
+        tr:hover td {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        /* Formula Grid Layout */
+        .formula-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* Formula Card Styles */
+        .formula-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 0 0 calc(25% - 2rem); /* Adjust card width to 25% */
+            max-width: 280px; /* Limit maximum width */
+        }
+
+        .formula-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-color: #3498db;
+        }
+
+        /* Header with Icon */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .header h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Formula Text */
+        .formula {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #3498db;
+            margin: 1rem 0;
+        }
+
+        /* Description Text */
+        .description {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .formula-card {
+                flex: 0 0 calc(50% - 2rem); /* 2 cards per row */
+            }
+
+            .formula-grid {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .formula-card {
+                flex: 0 0 calc(100% - 2rem); /* Single card per row */
+            }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #e6f9f6);
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+        }
+
+        /* Navigation bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #34495e;
+            padding: 1rem 2rem;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #1abc9c;
+            transform: scale(1.1);
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        section h2 {
+            color: black;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #e8f4ff;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .data-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .data-point {
+            flex: 1 1 calc(33.333% - 1rem);
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-point h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .data-point p {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 1rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .data-point {
+                flex: 1 1 100%;
+            }
+        }
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #e6f9f6);
+            color: #2c3e50;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(90deg, #2c3e50, #1abc9c);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #34495e;
+            padding: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #1abc9c;
+            transform: scale(1.1);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Model Evaluation Dashboard</h1>
+      
+    </header>
+    <nav>
+ <a href="/home">Home </a>
+        <a href="/about">About Project</a>
+        <a href="/prediction">Predictions</a>
+                <a href="/flow">Project Flowchart</a>
+
+           </nav>
+
+    <main>
+        <!-- Model Performance Section -->
+        <section class="card">
+            <h2>Model Performance Overview</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Description</th>
+                            <th>Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Random Forest</td>
+                            <td>Ensemble learning method using multiple decision trees</td>
+                            <td>90.45%</td>
+                        </tr>
+                        <tr>
+                            <td>ResNet50</td>
+                            <td>Deep residual network with 50 layers</td>
+                            <td>90.81%</td>
+                        </tr>
+                        <tr>
+                            <td>VGG-16</td>
+                            <td>16-layer CNN architecture</td>
+                            <td>91.05%</td>
+                        </tr>
+                        <tr>
+                            <td>Combined Framework</td>
+                            <td>Ensemble of all three models</td>
+                            <td>96.00%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Model Comparison Section -->
+        <section class="card">
+            <h2>Model Comparison</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Compared To</th>
+                            <th>Difference in Precision</th>
+                            <th>Difference in Recall</th>
+                            <th>Difference in F1-Score</th>
+                            <th>Difference in Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Random Forest</td>
+                            <td>ResNet50</td>
+                            <td>-0.50%</td>
+                            <td>-1.04%</td>
+                            <td>-1.95%</td>
+                            <td>-0.36%</td>
+                        </tr>
+                        <tr>
+                            <td>ResNet50</td>
+                            <td>VGG-16</td>
+                            <td>-2.05%</td>
+                            <td>+3.02%</td>
+                            <td>+1.85%</td>
+                            <td>-0.24%</td>
+                        </tr>
+                        <tr>
+                            <td>VGG-16</td>
+                            <td>Combined Framework</td>
+                            <td>-6.32%</td>
+                            <td>-5.48%</td>
+                            <td>-6.30%</td>
+                            <td>-4.95%</td>
+                        </tr>
+                        <tr>
+                            <td>Combined Framework</td>
+                            <td>Random Forest</td>
+                            <td>+8.87%</td>
+                            <td>+3.50%</td>
+                            <td>+6.10%</td>
+                            <td>+5.55%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Formulas Section -->
+        <section class="card">
+            <h2>Evaluation Formulas</h2>
+            <div class="formula-grid">
+                <div class="formula-card">
+                    <div class="header">
+                        <span class="icon">📊</span>
+                        <h3>Accuracy</h3>
+                    </div>
+                    <p class="formula">(TP + TN) / (TP + FP + TN + FN)</p>
+                    <p class="description">Measures the percentage of correctly predicted outcomes out of the total predictions.</p>
+                </div>
+                <div class="formula-card">
+                    <div class="header">
+                        <span class="icon">✔️</span>
+                        <h3>Precision</h3>
+                    </div>
+                    <p class="formula">TP / (TP + FP)</p>
+                    <p class="description">Represents the proportion of correctly predicted positive cases among all predicted positives.</p>
+                </div>
+                <div class="formula-card">
+                    <div class="header">
+                        <span class="icon">🔍</span>
+                        <h3>Recall</h3>
+                    </div>
+                    <p class="formula">TP / (TP + FN)</p>
+                    <p class="description">Calculates the ratio of true positives identified out of all actual positives.</p>
+                </div>
+                <div class="formula-card">
+                    <div class="header">
+                        <span class="icon">⚖️</span>
+                        <h3>F1-Score                    </h3>
+                    </div>
+                    <p class="formula">2 × (Precision × Recall) / (Precision + Recall)</p>
+                    <p class="description">Balances precision and recall by computing their harmonic mean.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
